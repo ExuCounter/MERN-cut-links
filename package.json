@@ -1,0 +1,27 @@
+{
+  "name": "mern-cut-links",
+  "version": "1.0.0",
+  "description": "MERN stack link cut",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "server": "nodemon app.js"
+  },
+  "keywords": [
+    "mern",
+    "react",
+    "node",
+    "mongodb"
+  ],
+  "author": "Volodymyr Potiichuk <exucounter777@gmail.com>",
+  "license": "ISC",
+  "dependencies": {
+    "config": "^3.3.1",
+    "express": "^4.17.1",
+    "mongoose": "^5.9.12"
+  },
+  "devDependencies": {
+    "concurrently": "^5.2.0",
+    "nodemon": "^2.0.3"
+  }
+}
