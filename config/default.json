@@ -1,0 +1,4 @@
+{
+    "port": 3000,
+    "mongoUri": "mongodb+srv://exucounter:<qwerty12345>@cluster0-dn6on.azure.mongodb.net/mern?retryWrites=true&w=majority"
+}
