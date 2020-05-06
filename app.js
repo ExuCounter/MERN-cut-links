@@ -6,6 +6,8 @@ const config = require('config');
 
 const PORT = config.get('port') || 3000;
 
+app.use('/api/auth', require('./routes/auth.routes'))
+
 async function start() {
     try {
         await mongoose.connect(config.get('mongoUri'), {
