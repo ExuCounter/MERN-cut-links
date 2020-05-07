@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 
 const config = require('config');
 
-const PORT = config.get('port') || 3000;
+const PORT = config.get('port') || 5000;
 
 app.use('/api/auth', require('./routes/auth.routes'))
 
@@ -15,6 +15,7 @@ async function start() {
             useUnifiedTopology: true,
             useCreateIndex: true
         })
+        console.log('Success DB connection');
     } catch (e) {
         console.log('Server Error', e.message);
         process.exit(1);
