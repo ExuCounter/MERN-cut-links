@@ -14,7 +14,7 @@ export const useHttp = () => {
             const response = await fetch(url, { method, body, headers });
             const data = await response.json();
             if (!response.ok){
-                throw new Error('Something goes wrong')
+                throw new Error('Неверные данные')
             }
             setLoading(false);
             return data;
@@ -26,7 +26,7 @@ export const useHttp = () => {
         }
     }, []);
 
-    const clearError = useCallback(()=>setError(null), []);
+    const clearError = useCallback(()=>setError(null));
 
-    return { loading, request, error}
+    return { loading, request, error, clearError}
 }

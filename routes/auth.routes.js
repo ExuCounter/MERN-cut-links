@@ -6,17 +6,25 @@ const config = require('config');
 const router = Router();
 const {check, validationResult} = require('express-validator');
 
-function dataValidation(){
+function dataRegisterValidation(){
     return [
-        check('email').isEmail(),
-        check('password').isLength({min: 6})
+        check('email', 'Введите корректный email').isEmail(),
+        check('password', 'Введите пароль').isLength({min: 6})
+    ]
+}
+
+function dataLoginValidation(){
+    return  [
+        check('email', 'Введите корректный email').normalizeEmail().isEmail(),
+        check('password', 'Введите пароль').exists()
+            .isLength({min: 6})
     ]
 }
 
 // /api/auth/register
 router.post(
     '/register',
-    dataValidation(),
+    dataRegisterValidation(),
     async (req,res)=>{
     try {
         const errors = validationResult(req);
@@ -48,17 +56,14 @@ router.post(
     }
 })
 
-router.post('/login', async (req,res)=>{
-    [
-        check('email', 'Введите корректный email').normalizeEmail().isEmail(),
-        check('password', 'Введите пароль').exists()
-            .isLength({min: 6})
-    ],
+router.post(
+    '/login',
+    dataLoginValidation(),
     async (req,res)=>{
         try {
             const errors = validationResult(req);
 
-            if(!(errors.isEmpty)){
+            if(!(errors.isEmpty())){
                 return res.status(400).json({
                     errors: errors.array(),
                     message: 'Некоректные данные при входе в систему'
@@ -68,6 +73,8 @@ router.post('/login', async (req,res)=>{
             const {email, password} = req.body;
 
             const user = await User.findOne({ email });
+            console.log(user);
+
             if(!user){
                 return res.status(400).json({message: 'Пользователь не найден'})
             }
@@ -89,7 +96,6 @@ router.post('/login', async (req,res)=>{
         } catch (e) {
             res.status(500).json({message: 'Что-то пошло не так'})
         }
-    }
 })
 
 

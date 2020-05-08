@@ -1,14 +1,21 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useHttp } from '../hooks/http.hook';
+import { useMessage } from '../hooks/message.hook'
+import { useRoutes } from '../routes';
 
 export const AuthPage = () => {
-
-    const {loading, error, request} = useHttp();
-
+    const {loading, error, request, clearError} = useHttp();
+    const message = useMessage();
     const [form, setForm] = useState({
         email: '',
         password: ''
     })
+
+    useEffect(()=>{
+        console.log('Error', error);
+        message(error);
+        clearError();
+    }, [error, message])
 
     /* С помощью деструктуризации мы ищем элемент который изменился,
     и заменяем его значение на новое */
@@ -22,7 +29,16 @@ export const AuthPage = () => {
             const data = await request('/api/auth/register', "POST", {...form})
             console.log('data', data)
         } catch (e) {
-            
+
+        }
+    }
+
+    const loginHandler = async () => {
+        try {
+            const data = await request('/api/auth/login', "POST", {...form})
+            console.log('data', data);
+        } catch (e) {
+
         }
     }
 
@@ -55,6 +71,7 @@ export const AuthPage = () => {
                         className="btn yellow darken-4"
                         style={{marginRight: '10px'}}
                         disabled={loading}
+                        onClick={loginHandler}
                             >Sign In
                      </button>
                      <button 
