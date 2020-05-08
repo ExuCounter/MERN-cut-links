@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
+import { useHttp } from '../hooks/http.hook';
 
 export const AuthPage = () => {
+
+    const {loading, error, request} = useHttp();
 
     const [form, setForm] = useState({
         email: '',
@@ -29,7 +32,7 @@ export const AuthPage = () => {
                         placeholder="Email"
                         type="text"
                         class="validate"
-                        onChange='changeHandler'
+                        onChange={changeHandler}
                          />
                      <input 
                         id='password'
@@ -37,6 +40,7 @@ export const AuthPage = () => {
                         placeholder="Password"
                         type='password'
                         style={{marginBottom: '40px', display: 'block'}}
+                        onChange={changeHandler}
                         />
                      <button className="btn yellow darken-4" style={{marginRight: '10px'}}>Sign In</button>
                      <button className="btn grey lighten-1 ml-2 black-text">Sign Up</button>
