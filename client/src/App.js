@@ -4,7 +4,7 @@ import '../src/index.css';
 
 function App() {
   return (
-    <div>
+    <div className='container'>
         <h1>Login</h1>
     </div>
   )
