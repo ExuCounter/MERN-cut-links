@@ -1,11 +1,17 @@
 import React from 'react';
 import 'materialize-css/dist/css/materialize.min.css'
 import '../src/index.css';
+import {useRoutes} from './routes';
+import {BrowserRouter as Router} from 'react-router-dom';
 
 function App() {
+  const routes = useRoutes(false);
+
   return (
     <div className='container'>
-        <h1>Login</h1>
+      <Router>
+        {routes}
+      </Router>
     </div>
   )
 }

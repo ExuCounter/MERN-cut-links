@@ -1,6 +1,6 @@
 import React from 'react';
 
-export const AuthPage = () => {
+export const DetailPage = () => {
     return(
         <div>
             <h1>Detail Page</h1>
