@@ -1,5 +1,5 @@
 {
-    "port": 5000,
+    "port": 8000,
     "jwtSecret": "secret",
     "mongoUri": "mongodb+srv://exucounter:qwerty12345@cluster0-dn6on.azure.mongodb.net/test?retryWrites=true&w=majority"
 }

@@ -1,34 +1,38 @@
 const {Router} = require('express');
 const bcrypt = require('bcryptjs');
-const {check, validationResult} = require('express-validator');
 const User = require('../models/User');
 const jwt = require('jsonwebtoken');
 const config = require('config');
 const router = Router();
+const {check, validationResult} = require('express-validator');
+
+function dataValidation(){
+    return [
+        check('email').isEmail(),
+        check('password').isLength({min: 6})
+    ]
+}
 
 // /api/auth/register
 router.post(
     '/register',
-    [
-        check('email', 'Некоректный email').isEmail(),
-        check('password', 'Минимальная длина пароля 6 символов')
-            .isLength({min: 6})
-    ],
+    dataValidation(),
     async (req,res)=>{
     try {
         const errors = validationResult(req);
-
-        if(!(errors.isEmpty)){
+        console.log(errors)
+        if(!errors.isEmpty()){
             return res.status(400).json({
                 errors: errors.array(),
-                message: 'Некоректные данные'
+                message: 'Некоректные данные',
             })
         }
 
         const {email, password} = req.body;
-        const candidate = await User.find({ email:email });
 
-        if(candidate){
+        const candidate = await User.find({ email });
+
+        if(candidate.length){
             return res.status(400).json({message: 'Такой пользователь уже создан'});
         }
 
@@ -40,7 +44,7 @@ router.post(
         res.status(201).json({message: 'Пользователь создан'})
 
     } catch (e) {
-        res.status(500).json({ message: `Something goes wrong`});
+        res.status(500).json({ message: e.message});
     }
 })
 

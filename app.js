@@ -1,12 +1,14 @@
 const express = require('express');
 const app = express();
 const mongoose = require('mongoose');
+const bodyParser = require('body-parser');
 
 const config = require('config');
 
-const PORT = config.get('port') || 5000;
+const PORT = config.get('port') || 8000;
 
-app.use('/api/auth', require('./routes/auth.routes'))
+app.use(express.json({extended: true}))
+app.use('/api/auth', require('./routes/auth.routes'));
 
 async function start() {
     try {
