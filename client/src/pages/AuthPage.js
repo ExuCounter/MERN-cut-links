@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { useHttp } from '../hooks/http.hook';
 import { useMessage } from '../hooks/message.hook'
-import { useRoutes } from '../routes';
+import { AuthContext } from '../context/AuthContext';
 
 export const AuthPage = () => {
+    const auth = useContext(AuthContext);
     const {loading, error, request, clearError} = useHttp();
     const message = useMessage();
     const [form, setForm] = useState({
@@ -15,7 +16,7 @@ export const AuthPage = () => {
         console.log('Error', error);
         message(error);
         clearError();
-    }, [error, message])
+    }, [error, message, clearError])
 
     /* С помощью деструктуризации мы ищем элемент который изменился,
     и заменяем его значение на новое */
@@ -36,7 +37,7 @@ export const AuthPage = () => {
     const loginHandler = async () => {
         try {
             const data = await request('/api/auth/login', "POST", {...form})
-            console.log('data', data);
+            auth.login(data.token, data.userId)
         } catch (e) {
 
         }
